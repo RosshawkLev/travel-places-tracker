@@ -1,0 +1,303 @@
+:host {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  display: block;
+}
+
+.place-preview-overlay {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+  overflow-y: auto;
+
+  background: rgb(0 0 0 / 65%);
+}
+
+.place-preview-dialog {
+  position: relative;
+
+  width: min(100%, 1000px);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgb(0 0 0 / 40%);
+}
+
+.place-preview-close {
+  position: absolute;
+  z-index: 10;
+  top: 12px;
+  right: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+
+  color: #212529;
+  font-size: 36px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  &:hover {
+    background: #e9ecef;
+  }
+}
+
+.place-preview-header {
+  padding: 32px 72px 22px;
+  border-bottom: 1px solid #dee2e6;
+  text-align: center;
+
+  h1 {
+    margin: 0;
+
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 8px 0 0;
+    color: #6c757d;
+    font-size: 18px;
+  }
+}
+
+.place-preview-body {
+  display: block;
+  padding: 32px;
+}
+
+.image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #e9ecef;
+  color: #6c757d;
+}
+
+.place-preview-information {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.information-list {
+  margin: 0;
+}
+
+.information-item {
+  display: grid;
+  grid-template-columns: 125px minmax(0, 1fr);
+  gap: 16px;
+
+  padding: 14px 0;
+  border-bottom: 1px solid #eeeeee;
+
+  dt {
+    font-weight: 700;
+  }
+
+  dd {
+    min-width: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+    color: #454545;
+  }
+}
+
+.description-item {
+  display: block;
+
+  dd {
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+}
+
+.tips {
+  margin-top: 28px;
+
+  h2 {
+    margin-bottom: 14px;
+    font-size: 20px;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .place-preview-overlay {
+    align-items: flex-start;
+    padding: 12px;
+  }
+
+  .place-preview-dialog {
+    width: 100%;
+    max-height: none;
+  }
+
+  .place-preview-header {
+    padding: 26px 58px 20px;
+
+    p {
+      font-size: 16px;
+    }
+  }
+
+  .place-preview-body {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 20px;
+  }
+
+  .information-item {
+    grid-template-columns: 105px minmax(0, 1fr);
+  }
+}
+
+.details-loading,
+.details-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 320px;
+  padding: 40px;
+  text-align: center;
+}
+
+.details-loading {
+  gap: 16px;
+
+  p {
+    margin: 0;
+    color: #6c757d;
+  }
+}
+
+.place-preview-image {
+  img,
+  .image-placeholder {
+    width: 100%;
+    min-height: 380px;
+    border-radius: 12px;
+  }
+
+  img {
+    display: block;
+    height: 100%;
+    max-height: 520px;
+    object-fit: cover;
+  }
+}
+
+.image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #e9ecef;
+  color: #6c757d;
+}
+
+.place-preview-overlay {
+  animation: overlayFadeIn 220ms ease-out;
+}
+
+.place-preview-dialog {
+  animation: dialogOpen 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes overlayFadeIn {
+  from {
+    background: rgb(0 0 0 / 0%);
+  }
+
+  to {
+    background: rgb(0 0 0 / 65%);
+  }
+}
+
+@keyframes dialogOpen {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.details-loading-enter {
+  animation: detailsFadeIn 200ms ease-out;
+}
+
+.details-loading-leave {
+  animation: detailsFadeOut 150ms ease-in;
+}
+
+.details-content-enter {
+  animation: detailsSlideIn 260ms ease-out;
+}
+
+@keyframes detailsFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes detailsFadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes detailsSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

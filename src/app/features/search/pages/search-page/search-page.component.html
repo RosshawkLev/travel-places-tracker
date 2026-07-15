@@ -1,0 +1,82 @@
+<section class="container py-5">
+  <header class="mb-4">
+    <h1 class="display-6 fw-semibold">
+      Place Search
+    </h1>
+
+    <p class="text-secondary">
+      Знайдіть туристичні місця за ключовим словом і локацією.
+    </p>
+  </header>
+
+  <app-search-form
+    (search)="onSearch($event)"
+  />
+
+@if (loading()) {
+  <div
+    class="loading-state"
+    animate.enter="loading-enter"
+    animate.leave="loading-leave"
+  >
+    <div
+      class="spinner-border text-primary"
+      role="status"
+    >
+      <span class="visually-hidden">
+        Завантаження...
+      </span>
+    </div>
+
+    <p class="mb-0">
+      Шукаємо цікаві місця...
+    </p>
+  </div>
+  } @else if (errorMessage()) {
+    <div class="alert alert-danger mt-4">
+      {{ errorMessage() }}
+    </div>
+  } @else if (searched()) {
+    <div class="d-flex justify-content-between align-items-center my-4">
+      <h2 class="h4 mb-0">
+        Результати пошуку
+      </h2>
+
+      <span class="badge text-bg-primary">
+        Знайдено: {{ places().length }}
+      </span>
+    </div>
+
+    <div
+      class="row g-4 results-grid"
+      animate.enter="results-enter"
+    >
+      @for (place of places(); track place.id) {
+        <div class="col-12 col-md-6 col-xl-4">
+          <app-place-card
+            [place]="place"
+            [isInWishlist]="isInWishlist(place.id)"
+            (placeSelected)="openPlaceDetails($event)"
+            (wishlistToggle)="onWishlistToggle($event)"
+          />
+        </div>
+      } @empty {
+        <div class="col-12">
+          <div class="alert alert-info text-center">
+            За вказаними параметрами місць не знайдено.
+          </div>
+        </div>
+      }
+    </div>
+  }
+</section>
+
+@if (selectedPlace(); as selectedPlace) {
+  <app-place-details-page
+    animate.enter="preview-enter"
+    animate.leave="preview-leave"
+    [placeId]="selectedPlace.id"
+    [initialPlace]="selectedPlace"
+    (closed)="closePlaceDetails()"
+  />
+}

@@ -1,0 +1,178 @@
+<form
+  class="card shadow-sm p-4"
+  [formGroup]="searchForm"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="row g-3">
+    <div class="col-12 col-md-6">
+      <label
+        for="keyword"
+        class="form-label"
+      >
+        Ключове слово
+      </label>
+
+      <input
+        id="keyword"
+        type="text"
+        class="form-control"
+        formControlName="keyword"
+        placeholder="Наприклад, museum, coffee, park"
+      />
+    </div>
+
+    <div class="col-12 col-md-6">
+      <div class="d-flex justify-content-between align-items-center gap-3">
+        <label
+          for="city"
+          class="form-label"
+        >
+          Місто або місцевість
+        </label>
+
+        <div class="form-check mb-2">
+          <input
+            id="useGeolocation"
+            type="checkbox"
+            class="form-check-input"
+            formControlName="useGeolocation"
+            (change)="onGeolocationChange()"
+          />
+
+          <label
+            class="form-check-label"
+            for="useGeolocation"
+          >
+            Використати мою геолокацію
+          </label>
+        </div>
+      </div>
+
+      <input
+        id="city"
+        type="text"
+        class="form-control"
+        formControlName="city"
+        placeholder="Наприклад, Lviv, Ukraine"
+      />
+
+      @if (locationLoading()) {
+        <div class="form-text text-primary">
+          <span
+            class="spinner-border spinner-border-sm me-1"
+            aria-hidden="true"
+          ></span>
+
+          Визначаємо ваше місцезнаходження...
+        </div>
+      } @else if (
+        searchForm.controls.useGeolocation.value &&
+        !locationError()
+      ) {
+        <div class="form-text text-success">
+          Геолокацію успішно отримано.
+        </div>
+      } @else {
+        <div class="form-text">
+          Введіть місто або використайте поточну геолокацію.
+        </div>
+      }
+
+      @if (locationError()) {
+        <div class="text-danger small mt-1">
+          {{ locationError() }}
+        </div>
+      }
+    </div>
+
+    <div class="col-12 col-md-6">
+      <label
+        for="radius"
+        class="form-label"
+      >
+        Радіус, м
+        <span class="text-secondary fw-normal">
+          — необов’язково
+        </span>
+      </label>
+
+      <input
+        id="radius"
+        type="number"
+        class="form-control"
+        formControlName="radius"
+        min="1"
+        max="100000"
+        placeholder="За замовчуванням: 22000"
+        [class.is-invalid]="
+          searchForm.controls.radius.invalid &&
+          searchForm.controls.radius.touched
+        "
+      />
+
+      @if (
+        searchForm.controls.radius.invalid &&
+        searchForm.controls.radius.touched
+      ) {
+        <div class="invalid-feedback">
+          Радіус має бути від 1 до 100000 метрів.
+        </div>
+      }
+    </div>
+
+    <div class="col-12 col-md-6">
+      <label
+        for="limit"
+        class="form-label"
+      >
+        Кількість результатів
+        <span class="text-secondary fw-normal">
+          — необов’язково
+        </span>
+      </label>
+
+      <input
+        id="limit"
+        type="number"
+        class="form-control"
+        formControlName="limit"
+        min="1"
+        max="50"
+        placeholder="За замовчуванням: 10"
+        [class.is-invalid]="
+          searchForm.controls.limit.invalid &&
+          searchForm.controls.limit.touched
+        "
+      />
+
+      @if (
+        searchForm.controls.limit.invalid &&
+        searchForm.controls.limit.touched
+      ) {
+        <div class="invalid-feedback">
+          Кількість результатів має бути від 1 до 50.
+        </div>
+      }
+    </div>
+
+    <div class="col-12">
+      <div class="d-flex gap-2">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="searchForm.invalid || locationLoading()"
+        >
+          Знайти місця
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="onReset()"
+        >
+          Очистити
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

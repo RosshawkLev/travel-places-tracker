@@ -1,0 +1,76 @@
+<article
+  class="card h-100 shadow-sm place-card"
+  role="button"
+  tabindex="0"
+  (click)="openDetails()"
+  (keydown)="onKeydown($event)"
+>
+  <div class="card-body d-flex flex-column">
+    <span class="badge text-bg-secondary align-self-start mb-3">
+      {{ place().category }}
+    </span>
+
+    <h2 class="card-title h5">
+      {{ place().name }}
+    </h2>
+
+    @if (place().city || place().country) {
+      <p class="card-text text-secondary">
+        @if (place().city) {
+          {{ place().city }}
+        }
+
+        @if (place().city && place().country) {
+          ,
+        }
+
+        @if (place().country) {
+          {{ place().country }}
+        }
+      </p>
+    }
+
+    @if (place().address) {
+      <p class="card-text">
+        <strong>Адреса:</strong>
+        {{ place().address }}
+      </p>
+    }
+
+    @if (place().rating !== undefined) {
+      <p class="mb-2">
+        <strong>Рейтинг:</strong>
+        {{ place().rating }} / 10
+      </p>
+    }
+
+    @if (place().distance !== undefined) {
+      <p class="mb-2">
+        <strong>Відстань:</strong>
+        {{ place().distance }} м
+      </p>
+    }
+
+    @if (place().description) {
+      <p class="card-text description">
+        {{ place().description }}
+      </p>
+    }
+
+    <div class="mt-auto pt-3">
+      <button
+        type="button"
+        class="btn w-100"
+        [class.btn-danger]="isInWishlist()"
+        [class.btn-primary]="!isInWishlist()"
+        (click)="onWishlistToggle($event)"
+      >
+        {{
+          isInWishlist()
+            ? 'Видалити з wishlist'
+            : 'Додати до wishlist'
+        }}
+      </button>
+    </div>
+  </div>
+</article>

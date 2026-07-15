@@ -1,0 +1,115 @@
+/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/scss/bootstrap";
+
+button,
+.btn {
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    opacity 180ms ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgb(0 0 0 / 15%);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(1px) scale(0.97);
+    box-shadow: 0 1px 4px rgb(0 0 0 / 15%);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+}
+
+.spinner-border {
+  animation:
+    spinner-border 0.75s linear infinite,
+    spinnerPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes spinnerPulse {
+  0%,
+  100% {
+    opacity: 0.65;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.preview-enter {
+  animation: previewHostEnter 220ms ease-out;
+}
+
+.preview-leave {
+  animation: previewHostLeave 180ms ease-in;
+}
+
+@keyframes previewHostEnter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes previewHostLeave {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+::view-transition-old(root) {
+  animation: pageFadeOut 160ms ease-in both;
+}
+
+::view-transition-new(root) {
+  animation: pageFadeIn 220ms ease-out both;
+}
+
+@keyframes pageFadeOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

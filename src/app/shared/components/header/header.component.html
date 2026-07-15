@@ -1,0 +1,25 @@
+<header class="header">
+  <a
+    class="logo"
+    routerLink="/"
+  >
+    Travel Places Tracker
+  </a>
+
+  <nav class="d-flex gap-3">
+    <a
+      routerLink="/"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Пошук
+    </a>
+
+    <a
+      routerLink="/wishlist"
+      routerLinkActive="active-link"
+    >
+      Wishlist
+    </a>
+  </nav>
+</header>

@@ -1,0 +1,179 @@
+<div
+  class="place-preview-overlay"
+  role="presentation"
+  (click)="close()"
+>
+  <section
+    class="place-preview-dialog"
+    role="dialog"
+    aria-modal="true"
+    (click)="stopPropagation($event)"
+  >
+    <button
+      type="button"
+      class="place-preview-close"
+      aria-label="Закрити"
+      (click)="close()"
+    >
+      &times;
+    </button>
+
+    @if (place(); as selectedPlace) {
+      <header class="place-preview-header">
+        <h1>{{ selectedPlace.name }}</h1>
+
+        @if (selectedPlace.city || selectedPlace.country) {
+          <p>
+            @if (selectedPlace.city) {
+              {{ selectedPlace.city }}
+            }
+
+            @if (
+              selectedPlace.city &&
+              selectedPlace.country
+            ) {
+              ,
+            }
+
+            @if (selectedPlace.country) {
+              {{ selectedPlace.country }}
+            }
+          </p>
+        }
+      </header>
+    }
+
+    @if (loading()) {
+    <div
+        class="details-loading"
+        animate.enter="details-loading-enter"
+        animate.leave="details-loading-leave"
+    >
+        <div
+          class="spinner-border text-primary"
+          role="status"
+        >
+          <span class="visually-hidden">
+            Завантаження...
+          </span>
+        </div>
+
+        <p>Завантажуємо детальну інформацію...</p>
+      </div>
+    } @else if (errorMessage()) {
+      <div class="details-error">
+        <div class="alert alert-danger mb-3">
+          {{ errorMessage() }}
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          (click)="retry()"
+        >
+          Спробувати ще раз
+        </button>
+      </div>
+    } @else if (place(); as selectedPlace) {
+      <div class="place-preview-body">
+        <div class="place-preview-image">
+          @if (selectedPlace.photoUrl) {
+            <img
+              [src]="selectedPlace.photoUrl"
+              [alt]="selectedPlace.name"
+            />
+          } @else {
+            <div class="image-placeholder">
+              Фото відсутнє
+            </div>
+          }
+        </div>
+
+        <div class="place-preview-information">
+          <dl class="information-list">
+            <div class="information-item">
+              <dt>Категорія</dt>
+              <dd>{{ selectedPlace.category }}</dd>
+            </div>
+
+            @if (selectedPlace.address) {
+              <div class="information-item">
+                <dt>Адреса</dt>
+                <dd>{{ selectedPlace.address }}</dd>
+              </div>
+            }
+
+            @if (selectedPlace.workingHours) {
+              <div class="information-item">
+                <dt>Години роботи</dt>
+                <dd>{{ selectedPlace.workingHours }}</dd>
+              </div>
+            }
+
+            @if (selectedPlace.openNow !== undefined) {
+              <div class="information-item">
+                <dt>Статус</dt>
+
+                <dd>
+                  <span
+                    class="badge"
+                    [class.text-bg-success]="selectedPlace.openNow"
+                    [class.text-bg-danger]="!selectedPlace.openNow"
+                  >
+                    {{
+                      selectedPlace.openNow
+                        ? 'Відчинено'
+                        : 'Зачинено'
+                    }}
+                  </span>
+                </dd>
+              </div>
+            }
+
+            @if (selectedPlace.rating !== undefined) {
+              <div class="information-item">
+                <dt>Рейтинг</dt>
+                <dd>{{ selectedPlace.rating }} / 10</dd>
+              </div>
+            }
+
+            @if (selectedPlace.phone) {
+              <div class="information-item">
+                <dt>Телефон</dt>
+
+                <dd>
+                  <a [href]="'tel:' + selectedPlace.phone">
+                    {{ selectedPlace.phone }}
+                  </a>
+                </dd>
+              </div>
+            }
+
+            @if (selectedPlace.website) {
+              <div class="information-item">
+                <dt>Сайт</dt>
+
+                <dd>
+                  <a
+                    [href]="selectedPlace.website"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Перейти на сайт
+                  </a>
+                </dd>
+              </div>
+            }
+
+            @if (selectedPlace.description) {
+              <div class="information-item description-item">
+                <dt>Опис</dt>
+                <dd>{{ selectedPlace.description }}</dd>
+              </div>
+            }
+          </dl>
+        </div>
+      </div>
+    }
+  </section>
+</div>
