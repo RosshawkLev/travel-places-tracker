@@ -18,6 +18,7 @@
   overflow-y: auto;
 
   background: rgb(0 0 0 / 65%);
+  animation: overlayFadeIn 220ms ease-out;
 }
 
 .place-preview-dialog {
@@ -30,6 +31,7 @@
   border-radius: 16px;
   background: #ffffff;
   box-shadow: 0 24px 60px rgb(0 0 0 / 40%);
+  animation: dialogOpen 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .place-preview-close {
@@ -85,15 +87,6 @@
 .place-preview-body {
   display: block;
   padding: 32px;
-}
-
-.image-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: #e9ecef;
-  color: #6c757d;
 }
 
 .place-preview-information {
@@ -226,14 +219,6 @@
 
   background: #e9ecef;
   color: #6c757d;
-}
-
-.place-preview-overlay {
-  animation: overlayFadeIn 220ms ease-out;
-}
-
-.place-preview-dialog {
-  animation: dialogOpen 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 @keyframes overlayFadeIn {

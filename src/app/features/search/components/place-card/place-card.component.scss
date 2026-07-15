@@ -6,38 +6,6 @@
 .place-card {
   height: 100%;
   cursor: pointer;
-  transition:
-    transform 150ms ease,
-    box-shadow 150ms ease;
-
-  &:hover {
-    transform: translateY(-3px);
-  }
-
-  &:focus-visible {
-    outline: 3px solid rgb(13 110 253 / 40%);
-    outline-offset: 3px;
-  }
-}
-
-.card-body {
-  min-height: 280px;
-}
-
-.description {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-}
-
-:host {
-  display: block;
-  height: 100%;
-}
-
-.place-card {
-  height: 100%;
-  cursor: pointer;
 
   transition:
     transform 180ms ease,
@@ -58,4 +26,14 @@
     outline: 3px solid rgb(13 110 253 / 35%);
     outline-offset: 3px;
   }
+}
+
+.card-body {
+  min-height: 280px;
+}
+
+.description {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
 }
